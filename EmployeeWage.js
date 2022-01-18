@@ -6,6 +6,7 @@ const WAGE_PER_HOUR = 20;
 const NUM_OF_WORKING_DAYS = 20;
 const MAX_HRS_IN_MONTH = 160;
 let empDailyWageArr = new Array();
+let empDailyWageMap = new Map();//need to create here map for UC 8
 
 function getWorkingHours(empCheck) {
     switch (empCheck) {
@@ -29,7 +30,9 @@ while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS
     let empCheck = Math.floor(Math.random() * 10) % 3;
     let empHrs = getWorkingHours(empCheck);
     totalEmpHrs += empHrs;
-    empDailyWageArr.push(calculateDailyWage(empHrs));
+    let dailyWage = calculateDailyWage(empHrs);
+    empDailyWageArr.push(dailyWage);
+    empDailyWageMap.set(totalWorkingDays, dailyWage); //Here we need to set key and value for UC 8
 }
 let empWage = totalEmpHrs * WAGE_PER_HOUR;
 console.log("UC6 -Total Days:" + totalWorkingDays + "," + " Total Hours:" + totalEmpHrs + "," + " Employee Wage: " + empWage + "," + "Daily Wages: " + "[" + empDailyWageArr + "]");
@@ -85,3 +88,19 @@ function totalDaysWorked(numOfDays, dailyWage) {
     return numOfDays;
 }
 console.log("7G: number of days the Employee Worked: " + empDailyWageArr.reduce(totalDaysWorked, 0));
+
+//UC ==> 8
+for (let [key, value] of empDailyWageMap) {
+    console.log(key + " - " + value);
+}
+function calcTotalWageUsingReduce(totalWage, dailyWage) {
+    return totalWage + dailyWage;
+}
+console.log("Total wage using reduce: " + Array.from(empDailyWageMap.values()).reduce(calcTotalWageUsingReduce, 0));
+
+let totalWagesUsingMap = 0;
+function totalWagesMap(dailyWage) {
+    totalWagesUsingMap += dailyWage;
+}
+Array.from(empDailyWageMap.values()).map(totalWagesMap)
+console.log("Total wage using map method :" + totalWagesUsingMap);
