@@ -33,3 +33,55 @@ while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS
 }
 let empWage = totalEmpHrs * WAGE_PER_HOUR;
 console.log("UC6 -Total Days:" + totalWorkingDays + "," + " Total Hours:" + totalEmpHrs + "," + " Employee Wage: " + empWage + "," + "Daily Wages: " + "[" + empDailyWageArr + "]");
+
+//UC ==> 7a
+let totalWage = 0;
+function sum(dailyWage) {
+    totalWage += dailyWage;
+}
+empDailyWageArr.forEach(sum);
+console.log(" 7A: TotalWage using forEach: " + totalWage);
+
+function totalWages(sum, nextValue) {
+    return sum + nextValue;
+}
+let sum1 = empDailyWageArr.reduce(totalWages, 0);
+console.log(" 7A: TotalWage using reduce: " + sum1);
+
+//UC ==> 7b
+
+let counter = 0;
+function mapDayWithDailyWage(dailyWage) {
+    counter++;
+    return counter + " = " + dailyWage;
+}
+let mapDayWithWageArr = empDailyWageArr.map(mapDayWithDailyWage);
+console.log(" 7B: Day along with daily wage: " + mapDayWithWageArr);
+
+//UC ==> 7c
+let fullTimeWage = function (dailyWage) {
+    return dailyWage.toString().includes("160");
+}
+let fullDayWageArr = mapDayWithWageArr.filter(fullTimeWage);
+console.log("7C: Day when full daily wage is earned: " + fullDayWageArr);
+
+//UC ==> 7d
+let fullDayWageFirstOccurence = mapDayWithWageArr.find(fullTimeWage);
+console.log("7D: First occurence when full time wage was earned: " + fullDayWageFirstOccurence);
+
+//UC ==> 7e
+console.log("7E: Check if Every Element of Full Time Wage is truly holding full time wage: " + fullDayWageArr.every(fullTimeWage));
+
+//UC ==> 7f
+let partTimeWage = function (dailyWage) {
+    return dailyWage.toString().includes("80");
+}
+console.log("7F: Check if there is any Part Time Wage: " + fullDayWageArr.some(partTimeWage));
+
+//UC ==> 7g
+function totalDaysWorked(numOfDays, dailyWage) {
+    if (dailyWage > 0)
+        return numOfDays + 1;
+    return numOfDays;
+}
+console.log("7G: number of days the Employee Worked: " + empDailyWageArr.reduce(totalDaysWorked, 0));
