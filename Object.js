@@ -32,11 +32,47 @@ while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS
         day: totalWorkingDays,
         dailyHours: empHrs,
         dailyWage: calculateDailyWage(empHrs),
-        toString() {
+        /*toString() {
             return '\nDay' + this.day + '=> Working hours is ' + this.dailyHours +
                 ' And wage earned = ' + this.dailyWage
         },
+        */
     });
 }
 
 console.log("Showing daily hours worked and Wage earned: " + empDailyHrsArr);
+
+//UC ==> 11A
+let totalWage = empDailyHrsArr.reduce((totalWage, dailyWageAndHrsObject) => {
+    return totalWage += dailyWageAndHrsObject.dailyWage;
+}, 0)
+console.log("Total wage: " + totalWage);
+
+let totalHrs = empDailyHrsArr.reduce((totalHrs, dailyHrsAndWages) => {
+    return totalHrs += dailyHrsAndWages.dailyHours;
+}, 0)
+console.log("Total Hours Worked: " + totalHrs);
+
+//UC ==> 11B
+empDailyHrsArr.forEach(dailyWageAndHrsObj => {
+    if (dailyWageAndHrsObj.dailyHours == FULL_TIME_HOURS) {
+        console.log(dailyWageAndHrsObj);
+    }
+});
+
+//Another way to get o/p by using filter method
+empDailyHrsArr
+    .filter(dailyWageAndHrsObj => dailyWageAndHrsObj.dailyHours == FULL_TIME_HOURS)
+    .forEach(dailyWorkHrs => console.log(dailyWorkHrs));
+
+//UC ==> 11C
+let partWorkingDayStrArr = empDailyHrsArr
+    .filter(dailyWageAndHrsObj => dailyWageAndHrsObj.dailyHours == PART_TIME_HOURS)
+    .map(dailyWageAndHrsObj => dailyWageAndHrsObj);
+console.log(partWorkingDayStrArr);
+
+//UC ==> 11D
+let noWorkingDays = empDailyHrsArr
+    .filter(dailyWageAndHrsObj => dailyWageAndHrsObj.dailyHours == 0)
+    .map(dailyWageAndHrsObj => dailyWageAndHrsObj);
+console.log(noWorkingDays);
